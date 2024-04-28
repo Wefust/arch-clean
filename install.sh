@@ -264,6 +264,68 @@ if [ "$interface" == "Y" ]; then
 
 fi
 
+
+if [ "$conf" == "Y" ]; then
+	### 0 - set FR keyboard
+	sudo localectl set-x11-keymap fr pc86
+
+	### 1 - create conf dir
+	mkdir /home/$USER/.config
+
+	###############################
+	##### 2 - zsh / oh my zsh #####
+	###############################
+
+	zsh=(
+		zsh
+		zsh-completions
+	)
+	for package in "${zsh[@]}"; do
+		install_package_pacman "$package" 2>&1
+	done
+
+	### install oh my zsh
+	if command -v zsh >/dev/null; then
+		printf "${NOTE} Installing Oh My Zsh and plugins...\n"
+		if [ ! -d "$HOME/.oh-my-zsh" ]; then
+			sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended || true
+		else
+			echo "Directory .oh-my-zsh already exists. Skipping re-installation." 2>&1
+		fi
+		### change zsh theme
+		#sed -i 's/^ZSH_THEME=.*/ZSH_THEME="dst"/' /home/$USER/.zshrc
+		cp .zshrc /home/$USER/
+
+		### set zsh by default
+		while ! chsh -s $(which zsh); do
+			echo "${ERROR} Authentication failed. Please enter the correct password." 2>&1
+			sleep 1
+		done
+		printf "${NOTE} Shell changed successfully to zsh.\n"
+	fi
+	clear
+
+	#####################################
+	##### 3 - copy i3 config files #####
+	#####################################
+
+	## COPY i3 conf
+	cp -r .config/* ~/.config/
+	chmod +x $HOME/.config/scripts/lock
+
+	## wallpapers
+	cp -r .wallpapers /home/$USER/
+
+	## Install fonts
+	install_package_pacman "ttf-jetbrains-mono" 2>&1
+	install_package_pacman "papirus-icon-theme" 2>&1
+	fc-cache -fv
+
+	## icons
+	install_package_yay "kora-icons-theme" 2>&1
+
+fi
+
 if [ "$develop" == "Y" ]; then
 
 	### 1 - Install code
@@ -327,88 +389,30 @@ if [ "$docker" == "Y" ] || [ "$exegol" == "Y" ]; then
 	sudo systemctl enable docker.service
 	sudo systemctl start docker.service
 
-	if [ "$exegol" == "Y" ]; then
-
-		## add user to docker group
-		sudo usermod -aG docker $(id -u -n)
-		## reload docker group
-		newgrp docker
-
-		## install exegol
-		pipx install git+https://github.com/ThePorgs/Exegol
-
-		## add python auto completion to zsh
-		echo 'eval "$(register-python-argcomplete --no-defaults exegol)"' >>~/.zshrc
-
-		pipx ensurepath
-
-		## install exegol nightly image
-		/$HOME/.local/bin/exegol install nightly
-	fi
-
 	clear
 fi
 
-if [ "$conf" == "Y" ]; then
-	### 0 - set FR keyboard
-	sudo localectl set-x11-keymap fr pc86
 
-	### 1 - create conf dir
-	mkdir /home/$USER/.config
+if [ "$exegol" == "Y" ]; then
 
-	###############################
-	##### 2 - zsh / oh my zsh #####
-	###############################
+	## add user to docker group
+	sudo usermod -aG docker $(id -u -n)
+	## reload docker group
+	# newgrp docker
 
-	zsh=(
-		zsh
-		zsh-completions
-	)
-	for package in "${zsh[@]}"; do
-		install_package_pacman "$package" 2>&1
-	done
+	echo $exegol
+	## install exegol
+	pipx install git+https://github.com/ThePorgs/Exegol
 
-	### install oh my zsh
-	if command -v zsh >/dev/null; then
-		printf "${NOTE} Installing Oh My Zsh and plugins...\n"
-		if [ ! -d "$HOME/.oh-my-zsh" ]; then
-			sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended || true
-		else
-			echo "Directory .oh-my-zsh already exists. Skipping re-installation." 2>&1
-		fi
-		### change zsh theme
-		#sed -i 's/^ZSH_THEME=.*/ZSH_THEME="dst"/' /home/$USER/.zshrc
-		cp .zshrc /home/$USER/
+	## add python auto completion to zsh
+	echo 'eval "$(register-python-argcomplete --no-defaults exegol)"' >>~/.zshrc
 
-		### set zsh by default
-		while ! chsh -s $(which zsh); do
-			echo "${ERROR} Authentication failed. Please enter the correct password." 2>&1
-			sleep 1
-		done
-		printf "${NOTE} Shell changed successfully to zsh.\n"
-	fi
-	clear
+	pipx ensurepath
 
-	#####################################
-	##### 3 - copy i3 config files #####
-	#####################################
-
-	## COPY i3 conf
-	cp -r .config/* ~/.config/
-	chmod +x $HOME/.config/scripts/lock
-
-	## wallpapers
-	cp -r .wallpapers /home/$USER/
-
-	## Install fonts
-	install_package_pacman "ttf-jetbrains-mono" 2>&1
-	install_package_pacman "papirus-icon-theme" 2>&1
-	fc-cache -fv
-
-	## icons
-	install_package_yay "kora-icons-theme" 2>&1
-
+	## install exegol nightly image
+	/$HOME/.local/bin/exegol install nightly
 fi
+
 
 if [ "$refind" == "Y" ]; then
 	install_package_pacman "refind" 2>&1
