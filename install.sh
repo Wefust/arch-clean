@@ -161,6 +161,7 @@ if [ "$interface" == "Y" ]; then
 		xorg-server
 		xorg-server-xephyr
 		xorg-setxkbmap
+		xorg-xrandr	
 	)
 	for package in "${x11[@]}"; do
 		install_package_pacman "$package" 2>&1
@@ -179,7 +180,7 @@ if [ "$interface" == "Y" ]; then
  	done
 
 	## install tt-font-awesome for i3 "icons"
-	sudo pacman -S ttf-font-awesome
+	sudo pacman -S ttf-font-awesome --noconfirm
 	fc-cache -fv
 
 	###############################
@@ -195,7 +196,6 @@ if [ "$interface" == "Y" ]; then
 		thunar
 		ranger
 		xautolock
-		xrandr
 	)
 	for package in "${i3_tools[@]}"; do
 		install_package_pacman "$package" 2>&1
@@ -424,7 +424,7 @@ if [ "$refind" == "Y" ]; then
 	sudo echo "# Load rEFInd minimal theme" >> refind.conf
 	sudo echo "include themes/rEFInd-minimal/theme.conf" >> refind.conf
 	cd ~/arch-clean
-	
+
 fi
 
 
