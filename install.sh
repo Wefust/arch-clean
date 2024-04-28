@@ -95,7 +95,6 @@ printf "\n"
 ask_yes_no "-Do you want to install bootloader rEFInd ?" refind
 printf "\n"
 
-
 if [ "$interface" == "Y" ]; then
 
 	### 1 - needed packet for install
@@ -136,7 +135,7 @@ if [ "$interface" == "Y" ]; then
 	##### 3 - yay install #####
 	###############################
 	if [ -n "$ISAUR" ]; then
-  		printf "\n%s - AUR helper already installed, moving on.\n" "${OK}"
+		printf "\n%s - AUR helper already installed, moving on.\n" "${OK}"
 	else
 		git clone https://aur.archlinux.org/yay-git.git && cd yay-git && makepkg -si --noconfirm && cd ..
 		### suppression du dépot téléchargé
@@ -151,9 +150,8 @@ if [ "$interface" == "Y" ]; then
 	)
 	for package in "${extra[@]}"; do
 		install_package_pacman "$package" 2>&1
- 	done 
+	done
 
-	
 	###############################
 	##### 4 - X11 #####
 	###############################
@@ -161,11 +159,11 @@ if [ "$interface" == "Y" ]; then
 		xorg-server
 		xorg-server-xephyr
 		xorg-setxkbmap
-		xorg-xrandr	
+		xorg-xrandr
 	)
 	for package in "${x11[@]}"; do
 		install_package_pacman "$package" 2>&1
- 	done
+	done
 
 	###############################
 	##### 5 - i3 #####
@@ -177,7 +175,7 @@ if [ "$interface" == "Y" ]; then
 	)
 	for package in "${i3[@]}"; do
 		install_package_pacman "$package" 2>&1
- 	done
+	done
 
 	## install tt-font-awesome for i3 "icons"
 	sudo pacman -S ttf-font-awesome --noconfirm
@@ -199,7 +197,7 @@ if [ "$interface" == "Y" ]; then
 	)
 	for package in "${i3_tools[@]}"; do
 		install_package_pacman "$package" 2>&1
- 	done
+	done
 	sudo systemctl enable docker.service
 	sudo systemctl start docker.service
 	sleep 0.5
@@ -210,8 +208,7 @@ if [ "$interface" == "Y" ]; then
 	)
 	for package in "${i3_yay[@]}"; do
 		install_package_yay "$package" 2>&1
- 	done 
-
+	done
 
 	#####################################
 	##### 7 - sddm install #####
@@ -226,7 +223,7 @@ if [ "$interface" == "Y" ]; then
 	)
 	for package in "${sddm[@]}"; do
 		install_package_pacman "$package" 2>&1
- 	done
+	done
 
 	## sddm conf files
 	sudo cp sddm/sddm.conf /etc/
@@ -246,11 +243,11 @@ if [ "$interface" == "Y" ]; then
 	)
 	for package in "${tools[@]}"; do
 		install_package_pacman "$package" 2>&1
- 	done
+	done
 
 	#####################################
 	##### 9 - install ttheme #####
-	#####################################	
+	#####################################
 	gtk=(
 		gtk3
 		gnome-settings-daemon
@@ -261,9 +258,9 @@ if [ "$interface" == "Y" ]; then
 	)
 	for package in "${gtk[@]}"; do
 		install_package_yay "$package" 2>&1
- 	done
+	done
 
-
+	clear
 
 fi
 
@@ -281,13 +278,12 @@ if [ "$develop" == "Y" ]; then
 	)
 	for package in "${python[@]}"; do
 		install_package_pacman "$package" 2>&1
- 	done
+	done
 
 	### 3 - install golang
 	install_page_pacman "go" 2>&1
-
+	clear
 fi
-
 
 if [ "$virtualbox" == "Y" ]; then
 
@@ -299,7 +295,7 @@ if [ "$virtualbox" == "Y" ]; then
 
 	for package in "${virt[@]}"; do
 		install_package_pacman "$package" 2>&1
- 	done
+	done
 
 	sudo modprobe vboxdrv
 
@@ -316,9 +312,8 @@ if [ "$virtualbox" == "Y" ]; then
 	sudo rm $nom
 	## add user to vboxusers group
 	sudo usermod -aG vboxusers $USER
-
+	clear
 fi
-
 
 if [ "$docker" == "Y" ] || [ "$exegol" == "Y" ]; then
 
@@ -328,29 +323,30 @@ if [ "$docker" == "Y" ] || [ "$exegol" == "Y" ]; then
 	)
 	for package in "${doc[@]}"; do
 		install_package_pacman "$package" 2>&1
- 	done
+	done
 	sudo systemctl enable docker.service
 	sudo systemctl start docker.service
-	sleep 0.5
-fi
 
-if [ "$exegol" == "Y" ]; then
+	if [ "$exegol" == "Y" ]; then
 
-	## add user to docker group
-	sudo usermod -aG docker $(id -u -n)
-	## reload docker group
-	newgrp docker
+		## add user to docker group
+		sudo usermod -aG docker $(id -u -n)
+		## reload docker group
+		newgrp docker
 
-	## install exegol
-	pipx install git+https://github.com/ThePorgs/Exegol
+		## install exegol
+		pipx install git+https://github.com/ThePorgs/Exegol
 
-	## add python auto completion to zsh
-	echo 'eval "$(register-python-argcomplete --no-defaults exegol)"' >>~/.zshrc
+		## add python auto completion to zsh
+		echo 'eval "$(register-python-argcomplete --no-defaults exegol)"' >>~/.zshrc
 
-	pipx ensurepath 
+		pipx ensurepath
 
-	## install exegol nightly image
-	/$HOME/.local/bin/exegol install nightly
+		## install exegol nightly image
+		/$HOME/.local/bin/exegol install nightly
+	fi
+
+	clear
 fi
 
 if [ "$conf" == "Y" ]; then
@@ -370,20 +366,20 @@ if [ "$conf" == "Y" ]; then
 	)
 	for package in "${zsh[@]}"; do
 		install_package_pacman "$package" 2>&1
- 	done
+	done
 
 	### install oh my zsh
 	if command -v zsh >/dev/null; then
-  		printf "${NOTE} Installing Oh My Zsh and plugins...\n"
+		printf "${NOTE} Installing Oh My Zsh and plugins...\n"
 		if [ ! -d "$HOME/.oh-my-zsh" ]; then
-  			sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended || true
+			sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended || true
 		else
 			echo "Directory .oh-my-zsh already exists. Skipping re-installation." 2>&1
 		fi
 		### change zsh theme
 		#sed -i 's/^ZSH_THEME=.*/ZSH_THEME="dst"/' /home/$USER/.zshrc
 		cp .zshrc /home/$USER/
-		
+
 		### set zsh by default
 		while ! chsh -s $(which zsh); do
 			echo "${ERROR} Authentication failed. Please enter the correct password." 2>&1
@@ -404,13 +400,12 @@ if [ "$conf" == "Y" ]; then
 	## wallpapers
 	cp -r .wallpapers /home/$USER/
 
-
 	## Install fonts
 	install_package_pacman "ttf-jetbrains-mono" 2>&1
 	install_package_pacman "papirus-icon-theme" 2>&1
 	fc-cache -fv
 
-	## icons 
+	## icons
 	install_package_yay "kora-icons-theme" 2>&1
 
 fi
@@ -422,16 +417,12 @@ if [ "$refind" == "Y" ]; then
 	sudo cd /boot/EFI/refind/themes
 	sudo git clone https://github.com/evanpurkhiser/rEFInd-minimal
 	sudo cd ..
-	sudo echo "# Load rEFInd minimal theme" >> refind.conf
-	sudo echo "include themes/rEFInd-minimal/theme.conf" >> refind.conf
+	sudo echo "# Load rEFInd minimal theme" >>refind.conf
+	sudo echo "include themes/rEFInd-minimal/theme.conf" >>refind.conf
 	cd ~/arch-clean
 
 fi
 
-
 if [ "$interface" == "Y" ]; then
 	sudo systemctl reboot
 fi
-
-
-
