@@ -284,7 +284,7 @@ if [ "$develop" == "Y" ]; then
  	done
 
 	### 3 - install golang
-	install_package_pacman "go" 2>&1
+	install_page_pacman "go" 2>&1
 
 fi
 
@@ -292,6 +292,7 @@ fi
 if [ "$virtualbox" == "Y" ]; then
 
 	virt=(
+		linux-hardened-headers
 		virtualbox-host-dkms
 		virtualbox
 	)
