@@ -1,0 +1,102 @@
+# Configuration du shell et des variables d'environnement
+shell = { program = "/bin/zsh", args = ["-1"]}
+
+# Activation de la recharge automatique de la config
+live_config_reload = true
+
+## Import additional configuration files.
+import = ["~/.config/alacritty/colors.toml","~/.config/alacritty/fonts.toml"]
+
+## Offer IPC using alacritty msg
+ipc_socket = true
+
+
+## ENVIRONMENT ----------------------------------------------------
+
+## All key-value pairs in the [env] section will be added as environment variables for a>
+## by Alacritty, including its shell. Some entries may override variables set by alacrit>
+[env]
+TERM = "alacritty"
+WINIT_X11_SCALE_FACTOR = "1.0"
+
+## WINDOW ---------------------------------------------------------
+[window]
+position = "None"
+dynamic_padding = true
+#decorations = "full"
+#opacity = 0.8
+#blur = false
+#startup_mode = "Windowed"
+#dynamic_title = true
+#class = { instance = "Alacritty", general = "Alacritty" }
+#decorations_theme_variant = "None"
+
+
+## Number of lines/columns (not pixels) in the terminal.
+[window.dimensions]
+columns = 82
+lines = 24
+
+## Blank space added around the window in pixels.
+[window.padding]
+x = 12
+y = 12
+
+## SCROLLING ------------------------------------------------------
+[scrolling]
+history = 10000
+multiplier = 3
+
+[bell]
+animation = "EaseOutExpo"
+color = "0xffffff"
+duration = 0
+
+## SELECTION ------------------------------------------------------
+[selection]
+save_to_clipboard = true
+
+## CURSOR ---------------------------------------------------------
+[cursor]
+unfocused_hollow = true
+#style = "Block"
+style = {shape = "Block",blinking = "On"}
+
+
+## MOUSE ----------------------------------------------------------
+[mouse]
+hide_when_typing = false
+
+[[mouse.bindings]]
+action = "PasteSelection"
+mouse = "Middle"
+
+#[mouse.double_click]
+#threshold = 300
+
+#[mouse.hints]
+#modifiers = "None"
+
+#[mouse.triple_click]
+#threshold = 300
+
+
+## HINTS ----------------------------------------------------------
+#[[hints.enabled]]
+#command         = "xdg-open"
+#hyperlinks      = true
+#post_processing = true
+#persist         = false
+#mouse.enabled   = true
+#binding         = { key = "U", mods = "Control|Shift" }
+#regex           = "(ipfs:|ipns:|magnet:|mailto:|gemini://|gopher://|https://|http://|new>
+
+## DEBUG ----------------------------------------------------------
+[debug]
+render_timer = false
+persistent_logging = false
+log_level = "Warn"
+renderer = "None"
+print_events = false
+highlight_damage = false
+prefer_egl = false

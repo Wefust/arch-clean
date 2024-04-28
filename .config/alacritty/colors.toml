@@ -1,0 +1,52 @@
+# Configuration des couleurs
+
+[colors]
+draw_bold_text_with_bright_colors = true
+
+[colors.bright]
+black = "0x666666"
+blue = "0x7aa6da"
+cyan = "0x54ced6"
+green = "0x9ec400"
+magenta = "0xb77ee0"
+red = "0xff3334"
+white = "0xffffff"
+yellow = "0xe7c547"
+
+[colors.normal]
+black = "0x000000"
+blue = "0x7aa6da"
+cyan = "0x70c0ba"
+green = "0xb9ca4a"
+magenta = "0xc397d8"
+red = "0xd54e53"
+white = "0xeaeaea"
+yellow = "0xe6c547"
+
+[colors.primary]
+background = "0x000000"
+foreground = "0xeaeaea"
+
+#[colors.primary]
+#background = "#1E2128"
+#foreground = "#ABB2BF"
+
+#[colors.normal]
+#black   = "#32363D"
+#red     = "#E06B74"
+#green   = "#98C379"
+#yellow  = "#E5C07A"
+#blue    = "#62AEEF"
+#magenta = "#C778DD"
+#cyan    = "#55B6C2"
+#white   = "#ABB2BF"
+
+#[colors.bright]
+#black   = "#50545B"
+#red     = "#EA757E"
+#green   = "#A2CD83"
+#yellow  = "#EFCA84"
+#blue    = "#6CB8F9"
+#magenta = "#D282E7"
+#cyan    = "#5FC0CC"
+#white   = "#B5BCC9"
