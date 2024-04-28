@@ -322,7 +322,7 @@ if [ "$conf" == "Y" ]; then
 	fc-cache -fv
 
 	## icons
-	install_package_yay "kora-icons-theme" 2>&1
+	install_package_yay "kora-icon-theme" 2>&1
 
 fi
 
