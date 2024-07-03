@@ -198,9 +198,9 @@ if [ "$interface" == "Y" ]; then
 	for package in "${i3_tools[@]}"; do
 		install_package_pacman "$package" 2>&1
 	done
-	sudo systemctl enable docker.service
-	sudo systemctl start docker.service
-	sleep 0.5
+	#sudo systemctl enable docker.service
+	#sudo systemctl start docker.service
+	#sleep 0.5
 
 	i3_yay=(
 		i3lock-color
