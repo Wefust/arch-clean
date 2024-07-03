@@ -247,7 +247,18 @@ if [ "$interface" == "Y" ]; then
 	done
 
 	#####################################
-	##### 9 - install ttheme #####
+	#####  install automount device #####
+	#####################################
+	tools=(
+		udev-media-automount
+  		ntfs-3g
+ 	)
+	for package in "${i3_yay[@]}"; do
+		install_package_yay "$package" 2>&1
+	done
+ 
+	#####################################
+	##### 9 - install theme #####
 	#####################################
 	gtk=(
 		gtk3
@@ -260,6 +271,7 @@ if [ "$interface" == "Y" ]; then
 	for package in "${gtk[@]}"; do
 		install_package_yay "$package" 2>&1
 	done
+
 
 	clear
 
