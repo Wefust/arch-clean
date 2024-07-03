@@ -250,7 +250,7 @@ if [ "$interface" == "Y" ]; then
 	#####  install automount device #####
 	#####################################
 	tools=(
-		udev-media-automount
+		#udev-media-automount
   		ntfs-3g
  	)
 	for package in "${i3_yay[@]}"; do
