@@ -240,6 +240,7 @@ if [ "$interface" == "Y" ]; then
 		syncthing
 		openvpn
 		neofetch
+  		htop
 	)
 	for package in "${tools[@]}"; do
 		install_package_pacman "$package" 2>&1
