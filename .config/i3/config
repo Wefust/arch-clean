@@ -84,15 +84,15 @@ exec_always --no-startup-id xautolock -time 5 -locker 'sh ~/.config/scripts/lock
 # i3bar with i3blocks
  bar {
     status_command i3blocks -c ~/.config/i3/i3blocks.conf
-        i3bar_command i3bar -t
-        position top
-        height 26
-        font pango:RobotoMono Nerd Font Regular 7.5
-        colors {
-            statusline #EEEEEE
-            background #1C1D2B88
-            focused_workspace #282A3E88 #282A3E88 #FFFFFF
-            statusline #E6FFF5
-        }
+    i3bar_command i3bar -t
+    position top
+    height 26
+    font pango: JetBrainsMono Nerd Font 10
+    colors {
+        statusline #EEEEEE
+        background #1C1D2B88
+        focused_workspace #282A3E88 #282A3E88 #FFFFFF
+        statusline #E6FFF5
+    }
 }
 
