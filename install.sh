@@ -95,6 +95,8 @@ printf "\n"
 ask_yes_no "-Do you want to install bootloader rEFInd ?" refind
 printf "\n"
 
+
+
 if [ "$interface" == "Y" ]; then
 
 	### 1 - needed packet for install
@@ -181,10 +183,37 @@ if [ "$interface" == "Y" ]; then
 	sudo pacman -S ttf-font-awesome --noconfirm
 	fc-cache -fv
 
+        ###############################
+        ##### Son : pipewire #####
+        ###############################
+        son=(
+                pipewire
+                pipewire-alsa
+		pipewire-pulse
+		wireplumber
+        )
+        for package in "${son[@]}"; do
+                install_package_pacman "$package" 2>&1
+        done
+	
+	sudo systemctl --user --now enable pipewire pipewire-pulse pipewire-alsa wireplumber
+
+        ###############################
+        ##### Bluetooth #####
+        ###############################
+        son=(
+                bluez
+                bluez-utils
+		blueman
+        )
+        for package in "${son[@]}"; do
+                install_package_pacman "$package" 2>&1
+        done
+
 	###############################
-	##### 6 - i3 softwares #####
+	#####  softwares #####
 	###############################
-	i3_tools=(
+	tools=(
 		rofi
 		feh
 		alacritty
@@ -194,13 +223,11 @@ if [ "$interface" == "Y" ]; then
 		thunar
 		ranger
 		xautolock
+		gedit
 	)
-	for package in "${i3_tools[@]}"; do
+	for package in "${tools[@]}"; do
 		install_package_pacman "$package" 2>&1
 	done
-	#sudo systemctl enable docker.service
-	#sudo systemctl start docker.service
-	#sleep 0.5
 
 	i3_yay=(
 		i3lock-color
@@ -241,16 +268,16 @@ if [ "$interface" == "Y" ]; then
 		openvpn
 		neofetch
   		htop
+		obsidian
 	)
 	for package in "${tools[@]}"; do
 		install_package_pacman "$package" 2>&1
 	done
 
 	#####################################
-	#####  install automount device #####
+	#####  install ntfs support #####
 	#####################################
 	tools=(
-		#udev-media-automount
   		ntfs-3g
  	)
 	for package in "${i3_yay[@]}"; do
@@ -271,7 +298,6 @@ if [ "$interface" == "Y" ]; then
 	for package in "${gtk[@]}"; do
 		install_package_yay "$package" 2>&1
 	done
-
 
 	clear
 
@@ -342,7 +368,7 @@ fi
 if [ "$develop" == "Y" ]; then
 
 	### 1 - Install code
-	install_package_yay "visual-studio-code-bin" 2>&1
+	install_package_pacman "code" 2>&1
 
 	### 2 - install python
 	python=(
