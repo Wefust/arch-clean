@@ -26,4 +26,3 @@ After the installtion run `lxappearance` to set `theme` and |`icons`
 - Transparency to firefox
 - Switch to sway
 - Use waybar
-- rEFInd
