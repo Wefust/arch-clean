@@ -26,3 +26,7 @@ After the installtion run `lxappearance` to set `theme` and |`icons`
 - Transparency to firefox
 - Switch to sway
 - Use waybar
+- detect hdmi output display
+- keyboard mic on/off
+- keyboard wifi on/off
+- keyboard bluetooth on/off
