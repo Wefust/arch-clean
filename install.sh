@@ -191,6 +191,7 @@ if [ "$interface" == "Y" ]; then
                 pipewire-alsa
 		pipewire-pulse
 		wireplumber
+  		pamixer
         )
         for package in "${son[@]}"; do
                 install_package_pacman "$package" 2>&1
@@ -348,6 +349,8 @@ if [ "$conf" == "Y" ]; then
 	##### 3 - copy i3 config files #####
 	#####################################
 
+	install_package_pacman "brightnessctl" 2>&1
+ 
 	## COPY i3 conf
 	cp -r .config/* ~/.config/
 	chmod +x $HOME/.config/scripts/lock
