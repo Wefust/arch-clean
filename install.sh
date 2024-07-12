@@ -225,6 +225,9 @@ if [ "$interface" == "Y" ]; then
 		ranger
 		xautolock
 		gedit
+  		openssh
+    		man-db
+      		man-pages
 	)
 	for package in "${tools[@]}"; do
 		install_package_pacman "$package" 2>&1
