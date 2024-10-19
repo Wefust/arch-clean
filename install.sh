@@ -174,6 +174,7 @@ if [ "$interface" == "Y" ]; then
 		i3-wm
 		i3blocks
 		i3status
+  		acpi
 	)
 	for package in "${i3[@]}"; do
 		install_package_pacman "$package" 2>&1
